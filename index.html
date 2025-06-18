@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>SmartCreative Sprint Form</title>
+  <link rel="stylesheet" href="dist/output.css" />
+</head>
+<body class="bg-gray-100 font-sans">
+  <!-- コンテナ -->
+  <div class="max-w-3xl mx-auto py-10 px-4">
+    <!-- タイトル -->
+    <h1 class="text-2xl font-bold bg-blue-600 text-white py-3 px-6 rounded">
+      提案書作成プロセスデモ – 生成AI × 従来型プログラム
+    </h1>
+
+    <!-- ========== STEP NAVIGATION ========== -->
+    <div id="steps" class="flex justify-between mt-8 mb-6">
+      <div class="step-item step-active">1. パラメータ</div>
+      <div class="step-item">2. 過去事例</div>
+      <div class="step-item">3. AI生成</div>
+    </div>
+
+    <!-- ========== STEP 1 ========== -->
+    <form id="step1" class="bg-white p-6 rounded shadow">
+      <h2 class="font-semibold mb-4">提案書パラメータ設定</h2>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm">業種</label>
+          <select name="industry" class="form-select">
+            <option>金融</option><option>製造</option> <!-- … -->
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm">企業規模</label>
+          <select name="scale" class="form-select">
+            <option>小規模 (-50)</option>
+            <option>中規模 (51–500)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm">主課題</label>
+          <select name="issue" class="form-select">
+            <option>レガシーシステム</option>
+            <option>人手不足</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm">予算規模</label>
+          <select name="budget" class="form-select">
+            <option>〜1000万円</option><option>1000–5000万円</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- ボタン -->
+      <div class="mt-6 flex justify-end space-x-3">
+        <button type="reset" class="btn-gray">リセット</button>
+        <button id="next1" class="btn-blue">次へ</button>
+      </div>
+    </form>
+
+    <!-- ========== STEP 2 (非表示) ========== -->
+    <div id="step2" class="hidden bg-white p-6 rounded shadow">
+      <!-- 検索中バー -->
+      <h2 class="font-semibold mb-4">① 提案パターン別の過去事例検索</h2>
+      <progress id="progress-search" class="w-full h-3"></progress>
+      <pre id="result-search" class="mt-4 text-sm bg-gray-50 p-3 rounded"></pre>
+
+      <div class="flex justify-between mt-6">
+        <button id="back2" class="btn-gray">前へ</button>
+        <button id="next2" class="btn-blue">次へ</button>
+      </div>
+    </div>
+
+    <!-- ========== STEP 3 (非表示) ========== -->
+    <div id="step3" class="hidden bg-white p-6 rounded shadow">
+      <h2 class="font-semibold mb-4">② AI がカスタマイズ提案作成</h2>
+      <progress id="progress-ai" class="w-full h-3"></progress>
+      <pre id="result-ai" class="mt-4 text-sm bg-yellow-50 p-3 rounded"></pre>
+
+      <button id="submit" class="btn-blue mt-6 float-right">
+        提案書を送信
+      </button>
+    </div>
+  </div>
+
+  <!-- Tailwind カスタムボタン Utility -->
+  <style>
+    .btn-blue { @apply bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700; }
+    .btn-gray { @apply bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400; }
+    .form-select { @apply w-full border-gray-300 rounded px-3 py-2; }
+    .step-item { @apply text-sm flex-1 text-center border-b-2 border-gray-300 py-2; }
+    .step-active { @apply font-bold border-blue-600 text-blue-600; }
+  </style>
+
+  <!-- ロジック(JS) -->
+  <script src="main.js"></script>
+</body>
+</html>
