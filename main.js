@@ -52,9 +52,21 @@ function fakeAI() {
 
 // === Make Webhook 送信 ===
 document.getElementById('submit').onclick = async () => {
-  // フォーム値を取得
-  const data = Object.fromEntries(new FormData(step1).entries());
-
+  // フォーム値を取得（新しいフィールドに対応）
+  const formData = new FormData(step1);
+  const data = {
+    company: formData.get('company'),
+    name: formData.get('name'),
+    email: formData.get('email'),
+    phone: formData.get('phone'),
+    employees: formData.get('employees'),
+    industry: formData.get('industry'),
+    challenges: formData.get('challenges'),
+    budget: formData.get('budget'),
+    timeline: formData.get('timeline'),
+    details: formData.get('details')
+  };
+  
   const res = await fetch(
     'https://hook.us2.make.com/5jydmswcjubg2dd58vmi2lm2us99dis3',  // ← Make で生成した URL
     { method: 'POST', headers: { 'Content-Type': 'application/json' },

@@ -23,41 +23,97 @@
 
     <!-- ========== STEP 1 ========== -->
     <form id="step1" class="bg-white p-6 rounded shadow">
-      <h2 class="font-semibold mb-4">提案書パラメータ設定</h2>
+      <h2 class="font-semibold mb-4 text-lg">お客様情報をご入力ください</h2>
+      
+      <p class="text-sm text-gray-600 mb-4">
+        <span class="text-red-500">*</span> は必須項目です
+      </p>
 
       <div class="grid grid-cols-2 gap-4">
         <div>
-          <label class="block text-sm">業種</label>
+          <label class="block text-sm font-medium mb-1">会社名 <span class="text-red-500">*</span></label>
+          <input type="text" name="company" class="form-input" placeholder="株式会社○○" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">ご担当者名 <span class="text-red-500">*</span></label>
+          <input type="text" name="name" class="form-input" placeholder="山田 太郎" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">メールアドレス <span class="text-red-500">*</span></label>
+          <input type="email" name="email" class="form-input" placeholder="example@company.jp" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">電話番号</label>
+          <input type="tel" name="phone" class="form-input" placeholder="03-1234-5678">
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">従業員規模</label>
+          <select name="employees" class="form-select">
+            <option value="">選択してください</option>
+            <option value="1-50名">1-50名</option>
+            <option value="51-100名">51-100名</option>
+            <option value="101-500名">101-500名</option>
+            <option value="501名以上">501名以上</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">業界</label>
           <select name="industry" class="form-select">
-            <option>金融</option><option>製造</option> <!-- … -->
+            <option value="">選択してください</option>
+            <option value="製造業">製造業</option>
+            <option value="小売業">小売業</option>
+            <option value="サービス業">サービス業</option>
+            <option value="IT・通信業">IT・通信業</option>
+            <option value="印刷・出版業">印刷・出版業</option>
+            <option value="不動産業">不動産業</option>
+            <option value="その他">その他</option>
+          </select>
+        </div>
+        <div class="col-span-2">
+          <label class="block text-sm font-medium mb-1">解決したい課題（複数選択可）</label>
+          <select name="challenges" class="form-select">
+            <option value="">選択してください</option>
+            <option value="業務効率化">業務効率化・自動化</option>
+            <option value="コスト削減">コスト削減</option>
+            <option value="売上向上">売上・集客向上</option>
+            <option value="人材不足">人材不足の解消</option>
+            <option value="DX推進">DX推進・デジタル化</option>
+            <option value="その他">その他</option>
           </select>
         </div>
         <div>
-          <label class="block text-sm">企業規模</label>
-          <select name="scale" class="form-select">
-            <option>小規模 (-50)</option>
-            <option>中規模 (51–500)</option>
-          </select>
-        </div>
-        <div>
-          <label class="block text-sm">主課題</label>
-          <select name="issue" class="form-select">
-            <option>レガシーシステム</option>
-            <option>人手不足</option>
-          </select>
-        </div>
-        <div>
-          <label class="block text-sm">予算規模</label>
+          <label class="block text-sm font-medium mb-1">ご予算</label>
           <select name="budget" class="form-select">
-            <option>〜1000万円</option><option>1000–5000万円</option>
+            <option value="">選択してください</option>
+            <option value="100万円以内">100万円以内</option>
+            <option value="100-500万円">100-500万円</option>
+            <option value="500-1000万円">500-1000万円</option>
+            <option value="1000万円以上">1000万円以上</option>
+            <option value="未定">未定</option>
           </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">導入希望時期</label>
+          <select name="timeline" class="form-select">
+            <option value="">選択してください</option>
+            <option value="1ヶ月以内">1ヶ月以内</option>
+            <option value="3ヶ月以内">3ヶ月以内</option>
+            <option value="6ヶ月以内">6ヶ月以内</option>
+            <option value="1年以内">1年以内</option>
+            <option value="未定">未定</option>
+          </select>
+        </div>
+        <div class="col-span-2">
+          <label class="block text-sm font-medium mb-1">詳細・ご要望</label>
+          <textarea name="details" rows="3" class="form-input" 
+            placeholder="具体的な課題や実現したいことをご記入ください"></textarea>
         </div>
       </div>
 
       <!-- ボタン -->
       <div class="mt-6 flex justify-end space-x-3">
         <button type="reset" class="btn-gray">リセット</button>
-        <button id="next1" class="btn-blue">次へ</button>
+        <button id="next1" type="button" class="btn-blue">次へ</button>
       </div>
     </form>
 
@@ -93,6 +149,9 @@
     .form-select { @apply w-full border-gray-300 rounded px-3 py-2; }
     .step-item { @apply text-sm flex-1 text-center border-b-2 border-gray-300 py-2; }
     .step-active { @apply font-bold border-blue-600 text-blue-600; }
+    .form-input { 
+      @apply w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent; 
+    }
   </style>
 
   <!-- ロジック(JS) -->
