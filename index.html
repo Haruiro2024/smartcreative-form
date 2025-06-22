@@ -46,6 +46,28 @@
           <label class="block text-sm font-medium mb-1">電話番号</label>
           <input type="tel" name="phone" class="form-input" placeholder="03-1234-5678">
         </div>
+
+        <!-- 📱 LINE通知セクション（新規追加） -->
+        <div class="col-span-2 bg-blue-50 p-4 rounded-lg border border-blue-200">
+          <h3 class="text-md font-semibold text-blue-800 mb-3">📱 通知設定（任意）</h3>
+          
+          <div class="flex items-center mb-3">
+            <input type="checkbox" id="line_notify" name="line_notify" value="yes" class="mr-2">
+            <label for="line_notify" class="text-sm font-medium">LINEでも通知を受け取る</label>
+          </div>
+          
+          <div id="line_section" class="hidden">
+            <label class="block text-sm font-medium mb-1">LINE ID</label>
+            <input type="text" name="line_id" class="form-input mb-2" placeholder="@abc123 または URL">
+            <div class="text-xs text-gray-600 bg-white p-2 rounded border">
+              💡 <strong>LINE IDがわからない場合：</strong><br>
+              1. <a href="#" onclick="showQR()" class="text-blue-600 underline">こちらのQRコード</a>をスキャンして友だち追加<br>
+              2. 自動返信でLINE IDをお知らせします<br>
+              3. そのIDを上記に入力してください
+            </div>
+          </div>
+        </div>
+
         <div>
           <label class="block text-sm font-medium mb-1">従業員規模</label>
           <select name="employees" class="form-select">
@@ -142,6 +164,24 @@
     </div>
   </div>
 
+  <!-- QRコードモーダル -->
+  <div id="qr-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg max-w-md mx-4">
+      <h3 class="text-lg font-semibold mb-4 text-center">🤖 SmartCreative DX 公式LINE</h3>
+      <div class="text-center mb-4">
+        <div class="w-48 h-48 bg-gray-100 mx-auto flex items-center justify-center border rounded">
+          <span class="text-gray-500">QRコード<br>（LINE公式アカウント作成後に設置）</span>
+        </div>
+      </div>
+      <p class="text-sm text-gray-600 mb-4 text-center">
+        スキャン後、自動返信でLINE IDをお知らせします
+      </p>
+      <button onclick="closeQR()" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+        閉じる
+      </button>
+    </div>
+  </div>
+
   <!-- Tailwind カスタムボタン Utility -->
   <style>
     .btn-blue { @apply bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700; }
@@ -155,6 +195,36 @@
   </style>
 
   <!-- ロジック(JS) -->
+  <script>
+    // DOMが読み込まれてから実行
+    document.addEventListener('DOMContentLoaded', function() {
+      // LINE通知チェックボックスの制御
+      const lineNotify = document.getElementById('line_notify');
+      if (lineNotify) {
+        lineNotify.addEventListener('change', function() {
+          const lineSection = document.getElementById('line_section');
+          if (this.checked) {
+            lineSection.classList.remove('hidden');
+          } else {
+            lineSection.classList.add('hidden');
+            document.querySelector('input[name="line_id"]').value = '';
+          }
+        });
+      }
+    });
+
+    // QRコードモーダル表示
+    function showQR() {
+      document.getElementById('qr-modal').classList.remove('hidden');
+      document.getElementById('qr-modal').classList.add('flex');
+    }
+
+    // QRコードモーダル非表示
+    function closeQR() {
+      document.getElementById('qr-modal').classList.add('hidden');
+      document.getElementById('qr-modal').classList.remove('flex');
+    }
+  </script>
   <script src="main.js"></script>
 </body>
 </html>
