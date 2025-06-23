@@ -288,7 +288,7 @@
       <pre id="result-ai" class="mt-4 text-sm bg-green-50 p-4 rounded border min-h-32"></pre>
 
       <div class="mt-6 text-center">
-        <button id="submit" class="btn-green-large">
+        <button id="submit" onclick="submitForm()" class="btn-green-large">
           📄 詳細提案書をLINE・メールで受け取る
         </button>
       </div>
@@ -443,6 +443,65 @@
 詳細な提案書とデモをご希望の場合は、
 下記ボタンよりお申込みください。
         `;
+      }
+
+      // フォーム送信処理
+      function submitForm() {
+        const formData = collectFormData();
+        
+        // Make.comにデータ送信
+        fetch('https://hook.us2.make.com/x2wx9o9j3hecicogslnlht6lnwrlm4gx', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+          alert('✅ お申し込みを受け付けました！\n\nLINE通知を設定された場合は、間もなく通知が届きます。\nメールでの詳細資料も送信いたします。');
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('❌ 送信中にエラーが発生しました。\n\nお手数ですが、直接メールにてお問い合わせください。');
+        });
+      }
+
+      // フォームデータ収集
+      function collectFormData() {
+        const formData = {};
+        
+        // Step 1のデータ
+        formData.company = document.querySelector('input[name="company"]').value;
+        formData.name = document.querySelector('input[name="name"]').value;
+        formData.email = document.querySelector('input[name="email"]').value;
+        formData.phone = document.querySelector('input[name="phone"]').value;
+        formData.line_notify = document.querySelector('input[name="line_notify"]').checked ? 'yes' : 'no';
+        formData.line_id = document.querySelector('input[name="line_id"]').value;
+        formData.employees = document.querySelector('select[name="employees"]').value;
+        formData.print_specialty = document.querySelector('select[name="print_specialty"]').value;
+        
+        // Step 2のデータ - チェックボックスの値を配列で取得
+        const printProducts = [];
+        document.querySelectorAll('input[name="print_products"]:checked').forEach(cb => {
+          printProducts.push(cb.value);
+        });
+        formData.print_products = printProducts;
+        
+        formData.monthly_orders = document.querySelector('select[name="monthly_orders"]').value;
+        formData.average_order = document.querySelector('select[name="average_order"]').value;
+        
+        const printChallenges = [];
+        document.querySelectorAll('input[name="print_challenges"]:checked').forEach(cb => {
+          printChallenges.push(cb.value);
+        });
+        formData.print_challenges = printChallenges;
+        
+        formData.budget = document.querySelector('select[name="budget"]').value;
+        formData.timeline = document.querySelector('select[name="timeline"]').value;
+        formData.details = document.querySelector('textarea[name="details"]').value;
+        
+        return formData;
       }
     });
 
