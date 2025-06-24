@@ -467,8 +467,8 @@ ${interestAreas.length > 0 ? '・' + interestAreas.join('\n・') : '・（具体
         },
         body: JSON.stringify(formData)
       })
-      .then(response => response.json())
-      .then(data => {
+      .then(response => {
+        if (response.ok) {
         alert('✅ ご相談を受け付けました！\n\n担当者より1-2営業日以内にご連絡いたします。\nLINE通知を設定された場合は、確認の通知も送信いたします。\n\nまずはお話をお聞かせください。\nありがとうございました。');
         // ホームページに戻る
         setTimeout(() => {
