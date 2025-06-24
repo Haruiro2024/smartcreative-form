@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>新しい取り組みご相談フォーム - 株式会社スマイディア</title>
+  <link rel="stylesheet" href="dist/output.css" />
+</head>
+<body class="bg-gray-100 font-sans">
+  <!-- ナビゲーション -->
+  <nav class="bg-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center">
+          <a href="./index.html" class="text-2xl font-bold text-gray-800">
+            🖨️ <span class="text-blue-600">スマイディア</span>
+            <span class="text-sm text-gray-500 ml-2">（旧スマイ印刷）</span>
+          </a>
+        </div>
+        <div class="text-sm text-gray-600">
+          <a href="./index.html" class="hover:text-blue-600">← ホームに戻る</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- コンテナ -->
+  <div class="max-w-4xl mx-auto py-10 px-4">
+    <!-- ヘッダー -->
+    <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-8 rounded-lg mb-8 shadow-lg">
+      <h1 class="text-3xl font-bold mb-4">🌱 新しい取り組みご相談フォーム</h1>
+      <p class="text-blue-100">
+        印刷業務以外の新しい分野で、何かお困りのことはありませんか？<br>
+        <strong>まずはお話をお聞かせください。</strong>お力になれるかもしれません。
+      </p>
+    </div>
+
+    <!-- 説明セクション -->
+    <div class="bg-white p-6 rounded-lg mb-8 shadow-md border-l-4 border-orange-500">
+      <h3 class="font-semibold text-orange-800 mb-3">💡 このような内容でご相談をお受けしています</h3>
+      <div class="bg-orange-50 p-4 rounded mb-4">
+        <p class="text-sm text-orange-700 mb-2">
+          <strong>※ 新しい分野のため、まずは「相談」からスタートです</strong>
+        </p>
+        <p class="text-xs text-orange-600">
+          確実にお受けできるかわからない場合もありますが、お話をお聞きして一緒に考えさせていただきます。
+        </p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4 text-sm text-gray-700">
+        <div class="space-y-2">
+          <div>🎨 商品・サービスのブランディング</div>
+          <div>🌐 Webサイト制作・リニューアル</div>
+          <div>📱 デジタル活用のご相談</div>
+          <div>🖨️ 印刷を活かした販促企画</div>
+        </div>
+        <div class="space-y-2">
+          <div>🌱 農業・食品関連のお手伝い</div>
+          <div>🏪 地域活性化・観光振興</div>
+          <div>📈 売上・知名度向上のアイデア</div>
+          <div>❓ その他、何でもご相談</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== STEP NAVIGATION ========== -->
+    <div id="steps" class="flex justify-between mt-8 mb-6">
+      <div class="step-item step-active">1. 基本情報</div>
+      <div class="step-item">2. ご相談内容</div>
+      <div class="step-item">3. ご相談をお受けします</div>
+    </div>
+
+    <!-- ========== STEP 1: 基本情報 ========== -->
+    <form id="step1" class="bg-white p-8 rounded-lg shadow-md">
+      <h2 class="font-semibold mb-6 text-xl text-gray-800">📝 基本情報をご入力ください</h2>
+      
+      <p class="text-sm text-gray-600 mb-6">
+        <span class="text-red-500">*</span> は必須項目です。お気軽にご相談ください。
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- 基本情報 -->
+        <div>
+          <label class="block text-sm font-medium mb-2">会社名・団体名 <span class="text-red-500">*</span></label>
+          <input type="text" name="company" class="form-input" placeholder="例：株式会社○○、個人事業主の場合は屋号など" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-2">お名前 <span class="text-red-500">*</span></label>
+          <input type="text" name="name" class="form-input" placeholder="山田 太郎" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-2">メールアドレス <span class="text-red-500">*</span></label>
+          <input type="email" name="email" class="form-input" placeholder="example@company.co.jp" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-2">お電話番号</label>
+          <input type="tel" name="phone" class="form-input" placeholder="077-XXX-XXXX">
+        </div>
+
+        <!-- 事業・組織について -->
+        <div>
+          <label class="block text-sm font-medium mb-2">業種・事業内容</label>
+          <select name="industry" class="form-select">
+            <option value="">選択してください</option>
+            <option value="製造業">製造業</option>
+            <option value="小売業・サービス業">小売業・サービス業</option>
+            <option value="飲食業">飲食業</option>
+            <option value="観光・宿泊業">観光・宿泊業</option>
+            <option value="農業・食品">農業・食品</option>
+            <option value="建設・不動産">建設・不動産</option>
+            <option value="医療・福祉">医療・福祉</option>
+            <option value="教育・文化">教育・文化</option>
+            <option value="行政・自治体">行政・自治体</option>
+            <option value="NPO・団体">NPO・団体</option>
+            <option value="個人">個人</option>
+            <option value="その他">その他</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium mb-2">規模</label>
+          <select name="organization_size" class="form-select">
+            <option value="">選択してください</option>
+            <option value="個人">個人</option>
+            <option value="1-5名">1-5名</option>
+            <option value="6-20名">6-20名</option>
+            <option value="21-50名">21-50名</option>
+            <option value="51名以上">51名以上</option>
+            <option value="自治体・団体">自治体・団体</option>
+          </select>
+        </div>
+
+        <!-- 📱 連絡方法の希望 -->
+        <div class="col-span-1 md:col-span-2 bg-green-50 p-4 rounded-lg border border-green-200">
+          <h3 class="text-md font-semibold text-green-800 mb-3">📱 ご連絡方法について（任意）</h3>
+          
+          <div class="flex items-center mb-3">
+            <input type="checkbox" id="line_notify" name="line_notify" value="yes" class="mr-2">
+            <label for="line_notify" class="text-sm font-medium">LINEでもご連絡をお受けする</label>
+            <span class="ml-2 bg-green-600 text-white text-xs px-2 py-1 rounded">便利</span>
+          </div>
+          
+          <div id="line_section" class="hidden">
+            <label class="block text-sm font-medium mb-1">LINE ID</label>
+            <input type="text" name="line_id" class="form-input mb-2" placeholder="@abc123 など">
+            <div class="text-xs text-gray-600 bg-white p-3 rounded border">
+              💡 <strong>LINE IDがわからない場合：</strong><br>
+              1. <a href="#" onclick="showQR()" class="text-green-600 underline font-medium">こちらのQRコード</a>をスキャンして友だち追加<br>
+              2. 自動返信でLINE IDをお知らせします<br>
+              3. そのIDを上記に入力してください
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ボタン -->
+      <div class="mt-8 flex justify-end space-x-3">
+        <button type="reset" class="btn-gray">リセット</button>
+        <button id="next1" type="button" class="btn-blue">次へ：ご相談内容</button>
+      </div>
+    </form>
+
+    <!-- ========== STEP 2: 相談内容 (非表示) ========== -->
+    <div id="step2" class="hidden bg-white p-8 rounded-lg shadow-md">
+      <h2 class="font-semibold mb-6 text-xl text-gray-800">💬 どのようなことでお困りですか？</h2>
+      
+      <div class="bg-yellow-50 p-4 rounded mb-6 text-sm text-yellow-800">
+        <strong>💡 お気軽に：</strong> 
+        「まだ漠然としている」「こんなこと相談していいかわからない」という段階でも大丈夫です。<br>
+        まずはお話をお聞かせください。
+      </div>
+
+      <div class="space-y-8">
+        <!-- 関心のある分野 -->
+        <div>
+          <label class="block text-sm font-medium mb-3">関心のある分野・取り組み（複数選択可）</label>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <label class="flex items-center text-sm p-3 border rounded-lg hover:bg-blue-50 cursor-pointer">
+              <input type="checkbox" name="interest_areas" value="商品・サービスのブランディング" class="mr-3">
+              <div>
+                <span class="font-medium">🎨 商品・サービスのブランディング</span>
+                <p class="text-xs text-gray-500">ロゴ、パッケージ、イメージ向上</p>
+              </div>
+            </label>
+            <label class="flex items-center text-sm p-3 border rounded-lg hover:bg-blue-50 cursor-pointer">
+              <input type="checkbox" name="interest_areas" value="Webサイト・デジタル活用" class="mr-3">
+              <div>
+                <span class="font-medium">🌐 Webサイト・デジタル活用</span>
+                <p class="text-xs text-gray-500">サイト作成、SNS活用、オンライン販売</p>
+              </div>
+            </label>
+            <label class="flex items-center text-sm p-3 border rounded-lg hover:bg-blue-50 cursor-pointer">
+              <input type="checkbox" name="interest_areas" value="印刷物を活用した販促・企画" class="mr-3">
+              <div>
+                <span class="font-medium">🖨️ 印刷物を活用した販促・企画</span>
+                <p class="text-xs text-gray-500">チラシ、パンフレット、ノベルティ</p>
+              </div>
+            </label>
+            <label class="flex items-center text-sm p-3 border rounded-lg hover:bg-blue-50 cursor-pointer">
+              <input type="checkbox" name="interest_areas" value="農業・食品関連" class="mr-3">
+              <div>
+                <span class="font-medium">🌱 農業・食品関連</span>
+                <p class="text-xs text-gray-500">農産物のブランド化、販路拡大</p>
+              </div>
+            </label>
+            <label class="flex items-center text-sm p-3 border rounded-lg hover:bg-blue-50 cursor-pointer">
+              <input type="checkbox" name="interest_areas" value="地域活性化・観光" class="mr-3">
+              <div>
+                <span class="font-medium">🏪 地域活性化・観光</span>
+                <p class="text-xs text-gray-500">地域PR、イベント、観光振興</p>
+              </div>
+            </label>
+            <label class="flex items-center text-sm p-3 border rounded-lg hover:bg-blue-50 cursor-pointer">
+              <input type="checkbox" name="interest_areas" value="その他・まだ決まっていない" class="mr-3">
+              <div>
+                <span class="font-medium">❓ その他・まだ決まっていない</span>
+                <p class="text-xs text-gray-500">漠然とした相談、アイデア段階</p>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- 現在の状況・お困りのこと -->
+        <div>
+          <label class="block text-sm font-medium mb-3">現在の状況・お困りのこと</label>
+          <textarea name="current_situation" rows="4" class="form-input" 
+            placeholder="例：商品は作っているが売り方がわからない、お客様にもっと知ってもらいたい、Webサイトを作りたいが何から始めればいいかわからない、地域を盛り上げたいがアイデアが欲しい など"></textarea>
+        </div>
+
+        <!-- どうなりたいか・理想の状態 -->
+        <div>
+          <label class="block text-sm font-medium mb-3">どうなりたいか・実現したいこと</label>
+          <textarea name="ideal_outcome" rows="4" class="form-input" 
+            placeholder="例：商品をもっと多くの人に知ってもらいたい、売上を増やしたい、地域の魅力を発信したい、お客様に愛される商品・サービスにしたい、まずは何をすればいいか知りたい など"></textarea>
+        </div>
+
+        <!-- 予算感・時期 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium mb-2">予算の考え方</label>
+            <select name="budget_approach" class="form-select">
+              <option value="">選択してください</option>
+              <option value="まずは低予算から始めたい">まずは低予算から始めたい</option>
+              <option value="効果があるなら投資したい">効果があるなら投資したい</option>
+              <option value="予算から一緒に考えたい">予算から一緒に考えたい</option>
+              <option value="まずは話を聞いてから">まずは話を聞いてから判断</option>
+            </select>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium mb-2">相談のタイミング</label>
+            <select name="timing" class="form-select">
+              <option value="">選択してください</option>
+              <option value="すぐにでも相談したい">すぐにでも相談したい</option>
+              <option value="近いうちに">近いうちに</option>
+              <option value="時期は決まっていない">時期は決まっていない</option>
+              <option value="情報収集段階">情報収集段階</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- その他・補足 -->
+        <div>
+          <label class="block text-sm font-medium mb-3">その他・補足情報（任意）</label>
+          <textarea name="additional_notes" rows="3" class="form-input" 
+            placeholder="参考になりそうな情報、過去に取り組んだこと、競合他社の状況、その他なんでもお書きください"></textarea>
+        </div>
+      </div>
+
+      <div class="flex justify-between mt-8">
+        <button id="back2" class="btn-gray">前へ</button>
+        <button id="next2" class="btn-blue">次へ：相談をお受けします</button>
+      </div>
+    </div>
+
+    <!-- ========== STEP 3: 相談受付 (非表示) ========== -->
+    <div id="step3" class="hidden bg-white p-8 rounded-lg shadow-md">
+      <h2 class="font-semibold mb-6 text-xl text-gray-800">🤝 ご相談をお受けいたします</h2>
+      
+      <div class="mb-6">
+        <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-400">
+          <p class="text-sm text-blue-800">
+            <strong>ご相談内容を確認</strong>させていただき、<br>
+            スマイディアでお手伝いできそうなことを一緒に考えさせていただきます。
+          </p>
+        </div>
+      </div>
+
+      <progress id="progress-consultation" class="w-full h-3 mb-6"></progress>
+      <pre id="result-consultation" class="mt-4 text-sm bg-green-50 p-6 rounded border min-h-32"></pre>
+
+      <div class="mt-8 text-center">
+        <button id="submit" onclick="submitForm()" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-12 py-4 rounded-lg font-bold text-lg hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg">
+          📞 ご相談を送信する
+        </button>
+        <p class="text-sm text-gray-600 mt-4">
+          送信後、1-2営業日以内にご連絡いたします
+        </p>
+        <p class="text-xs text-gray-500 mt-2">
+          ※ 新しい分野のため、お受けできない場合もございますが、まずはお話をお聞かせください
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- QRコードモーダル -->
+  <div id="qr-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg max-w-md mx-4 shadow-xl">
+      <h3 class="text-lg font-semibold mb-4 text-center text-green-800">
+        🖨️ スマイディア 公式LINE
+      </h3>
+      <div class="text-center mb-4">
+        <div class="w-48 h-48 mx-auto flex items-center justify-center bg-white p-2 rounded-lg border-2 border-green-200">
+          <img src="images/line-qr.png" alt="スマイディア LINE公式アカウント" 
+               class="w-full h-full object-contain rounded">
+        </div>
+      </div>
+      <div class="text-center space-y-2 mb-4">
+        <p class="text-sm font-medium text-gray-700">
+          📱 スマホでQRコードをスキャン
+        </p>
+        <p class="text-xs text-gray-600">
+          友だち追加後、自動返信でLINE IDをお知らせします<br>
+          そのIDを上記フォームに入力してください
+        </p>
+      </div>
+      <button onclick="closeQR()" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition-colors font-medium">
+        閉じる
+      </button>
+    </div>
+  </div>
+
+  <!-- スタイル -->
+  <style>
+    .btn-blue { @apply bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium; }
+    .btn-gray { @apply bg-gray-300 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-400 transition-colors font-medium; }
+    .form-select { @apply w-full border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500; }
+    .step-item { @apply text-sm flex-1 text-center border-b-2 border-gray-300 py-3 transition-colors; }
+    .step-active { @apply font-bold border-blue-600 text-blue-600; }
+    .form-input { 
+      @apply w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent; 
+    }
+  </style>
+
+  <!-- JavaScript -->
+  <script>
+    // DOMが読み込まれてから実行
+    document.addEventListener('DOMContentLoaded', function() {
+      // LINE通知チェックボックスの制御
+      const lineNotify = document.getElementById('line_notify');
+      if (lineNotify) {
+        lineNotify.addEventListener('change', function() {
+          const lineSection = document.getElementById('line_section');
+          if (this.checked) {
+            lineSection.classList.remove('hidden');
+          } else {
+            lineSection.classList.add('hidden');
+            document.querySelector('input[name="line_id"]').value = '';
+          }
+        });
+      }
+
+      // ステップナビゲーション
+      const step1 = document.getElementById('step1');
+      const step2 = document.getElementById('step2');
+      const step3 = document.getElementById('step3');
+      const steps = document.querySelectorAll('.step-item');
+
+      // 次へボタン（Step 1 → Step 2）
+      document.getElementById('next1').addEventListener('click', function() {
+        step1.classList.add('hidden');
+        step2.classList.remove('hidden');
+        updateStepIndicator(1);
+      });
+
+      // 次へボタン（Step 2 → Step 3）
+      document.getElementById('next2').addEventListener('click', function() {
+        step2.classList.add('hidden');
+        step3.classList.remove('hidden');
+        updateStepIndicator(2);
+        
+        // 相談受付のシミュレーション
+        simulateConsultationReview();
+      });
+
+      // 戻るボタン
+      document.getElementById('back2').addEventListener('click', function() {
+        step2.classList.add('hidden');
+        step1.classList.remove('hidden');
+        updateStepIndicator(0);
+      });
+
+      function updateStepIndicator(activeIndex) {
+        steps.forEach((step, index) => {
+          if (index === activeIndex) {
+            step.classList.add('step-active');
+          } else {
+            step.classList.remove('step-active');
+          }
+        });
+      }
+
+      function simulateConsultationReview() {
+        const progressBar = document.getElementById('progress-consultation');
+        const resultArea = document.getElementById('result-consultation');
+        
+        let progress = 0;
+        const interval = setInterval(() => {
+          progress += 15;
+          progressBar.value = progress;
+          
+          if (progress === 30) {
+            resultArea.textContent = '📋 ご相談内容を確認しています...';
+          } else if (progress === 60) {
+            resultArea.textContent = '📋 スマイディアでお手伝いできることを検討中...\n💡 印刷技術や過去の経験と照らし合わせ中...';
+          } else if (progress >= 100) {
+            clearInterval(interval);
+            showConsultationSummary();
+          }
+        }, 300);
+      }
+
+      function showConsultationSummary() {
+        const resultArea = document.getElementById('result-consultation');
+        const interestAreas = Array.from(document.querySelectorAll('input[name="interest_areas"]:checked')).map(cb => cb.value);
+        const currentSituation = document.querySelector('textarea[name="current_situation"]').value;
+        
+        resultArea.innerHTML = `
+<strong>📋 ご相談内容の確認</strong>
+
+<strong>■ 関心のある分野</strong>
+${interestAreas.length > 0 ? '・' + interestAreas.join('\n・') : '・（具体的な分野は今後お聞きします）'}
+
+<strong>■ スマイディアからのアプローチ</strong>
+・初回は無料でのご相談をお受けします
+・印刷業務で培った経験をもとに一緒に考えます
+・できること・できないことを正直にお伝えします
+・他の専門家のご紹介も可能です
+
+<strong>■ 今後の流れ</strong>
+1. 担当者よりお電話・メールでご連絡
+2. 詳しいお話をお聞かせいただく（無料相談）
+3. スマイディアでお手伝いできることをご提案
+4. ご検討いただき、進める場合は具体的な計画を立案
+
+<strong>■ お約束</strong>
+・相談は無料です
+・無理な営業はいたしません
+・お受けできない場合は正直にお伝えします
+・秘密は厳守いたします
+
+新しい分野への挑戦ですが、
+まずはお話をお聞かせください。
+お力になれるよう努力いたします。
+        `;
+      }
+    });
+
+    // フォーム送信処理
+    function submitForm() {
+      const formData = collectFormData();
+      
+      // Make.comにデータ送信
+      fetch('https://hook.us2.make.com/x2wx9o9j3hecicogslnlht6lnwrlm4gx', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert('✅ ご相談を受け付けました！\n\n担当者より1-2営業日以内にご連絡いたします。\nLINE通知を設定された場合は、確認の通知も送信いたします。\n\nまずはお話をお聞かせください。\nありがとうございました。');
+        // ホームページに戻る
+        setTimeout(() => {
+          window.location.href = './index.html';
+        }, 2000);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('❌ 送信中にエラーが発生しました。\n\nお手数ですが、下記までお電話にてお問い合わせください。\n\n📞 077-XXX-XXXX（平日 9:00-18:00）\n\n「新しい取り組みの相談です」とお伝えください。');
+      });
+    }
+
+    // フォームデータ収集
+    function collectFormData() {
+      const formData = {};
+      
+      // Step 1のデータ
+      formData.company = document.querySelector('input[name="company"]').value;
+      formData.name = document.querySelector('input[name="name"]').value;
+      formData.email = document.querySelector('input[name="email"]').value;
+      formData.phone = document.querySelector('input[name="phone"]').value;
+      formData.industry = document.querySelector('select[name="industry"]').value;
+      formData.organization_size = document.querySelector('select[name="organization_size"]').value;
+      formData.line_notify = document.querySelector('input[name="line_notify"]').checked ? 'yes' : 'no';
+      formData.line_id = document.querySelector('input[name="line_id"]').value;
+      
+      // Step 2のデータ - チェックボックスの値を配列で取得
+      const interestAreas = [];
+      document.querySelectorAll('input[name="interest_areas"]:checked').forEach(cb => {
+        interestAreas.push(cb.value);
+      });
+      formData.interest_areas = interestAreas;
+      
+      formData.current_situation = document.querySelector('textarea[name="current_situation"]').value;
+      formData.ideal_outcome = document.querySelector('textarea[name="ideal_outcome"]').value;
+      formData.budget_approach = document.querySelector('select[name="budget_approach"]').value;
+      formData.timing = document.querySelector('select[name="timing"]').value;
+      formData.additional_notes = document.querySelector('textarea[name="additional_notes"]').value;
+      
+      // フォーム種別を追加
+      formData.form_type = "新しい取り組み相談";
+      
+      return formData;
+    }
+
+    // QRコードモーダル制御
+    function showQR() {
+      document.getElementById('qr-modal').classList.remove('hidden');
+      document.getElementById('qr-modal').classList.add('flex');
+    }
+
+    function closeQR() {
+      document.getElementById('qr-modal').classList.add('hidden');
+      document.getElementById('qr-modal').classList.remove('flex');
+    }
+  </script>
+</body>
+</html>
