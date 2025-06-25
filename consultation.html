@@ -129,23 +129,60 @@
           </select>
         </div>
 
-        <!-- 📢 お知らせ（簡略版） -->
-        <div class="col-span-1 md:col-span-2 bg-blue-50 p-4 rounded-lg border border-blue-200">
-          <h3 class="text-md font-semibold text-blue-800 mb-3">📢 お知らせ</h3>
+        <!-- 📢 LINE通知オプション -->
+        <div class="col-span-1 md:col-span-2 bg-green-50 p-6 rounded-lg border border-green-200">
+          <h3 class="text-md font-semibold text-green-800 mb-3">📱 LINE通知サービス（任意）</h3>
           
-          <div class="text-sm text-blue-700">
+          <div class="text-sm text-green-700 mb-4">
             <p class="mb-2">
-              <strong>迅速な対応を心がけています</strong>
+              <strong>相談の進捗をLINEでもお知らせできます</strong>
             </p>
-            <p>
-              ご相談をいただいた後、1-2営業日以内に担当者よりご連絡いたします。<br>
-              お急ぎの場合は、お電話（077-XXX-XXXX）でもお気軽にお問い合わせください。
+            <p class="text-xs">
+              メールアドレスへの通知に加えて、LINEでも進捗状況をお知らせすることができます。<br>
+              ご希望の方は以下にチェックを入れてください。
             </p>
           </div>
-          
-          <!-- 隠しフィールド（管理者通知用） -->
-          <input type="hidden" name="line_notify" value="no">
-          <input type="hidden" name="line_user_id" value="">
+
+          <!-- LINE通知希望チェックボックス -->
+          <label class="flex items-center cursor-pointer mb-4">
+            <input type="checkbox" id="lineNotifyCheck" name="line_notify_check" class="mr-3 h-5 w-5 text-green-600">
+            <span class="text-sm font-medium">LINE通知を希望する</span>
+          </label>
+
+          <!-- LINE認証セクション（デフォルトで非表示） -->
+          <div id="lineAuthSection" class="hidden">
+            <div class="bg-white p-4 rounded-lg border border-green-300">
+              <p class="text-sm text-gray-700 mb-3">
+                <strong>手順：</strong>
+              </p>
+              <ol class="text-sm text-gray-600 space-y-2 mb-4">
+                <li>1. 下のボタンからLINE公式アカウントを友だち追加</li>
+                <li>2. 自動送信される認証コード（6桁の数字）を確認</li>
+                <li>3. 下の欄に認証コードを入力</li>
+              </ol>
+
+              <!-- LINE友だち追加ボタン -->
+              <div class="text-center mb-4">
+                <a href="https://lin.ee/YOUR_LINE_URL" target="_blank" class="inline-block bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-colors">
+                  <span class="text-lg">📱 LINE友だち追加</span>
+                </a>
+              </div>
+
+              <!-- 認証コード入力欄 -->
+              <div>
+                <label for="auth_code" class="block text-sm font-medium mb-2">認証コード：</label>
+                <input type="text" id="auth_code" name="auth_code" class="form-input" 
+                       placeholder="LINEで受信した6桁の数字を入力" maxlength="6" pattern="[0-9]{6}">
+                <p class="text-xs text-gray-500 mt-1">
+                  ※ 認証コードは30分間有効です
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 隠しフィールド -->
+          <input type="hidden" id="line_notify" name="line_notify" value="no">
+          <input type="hidden" id="line_id" name="line_id" value="">
         </div>
       </div>
 
@@ -321,8 +358,33 @@ document.addEventListener('DOMContentLoaded', function() {
   const step3 = document.getElementById('step3');
   const steps = document.querySelectorAll('.step-item');
 
+  // LINE通知チェックボックスの制御
+  const lineNotifyCheck = document.getElementById('lineNotifyCheck');
+  const lineAuthSection = document.getElementById('lineAuthSection');
+  const lineNotifyField = document.getElementById('line_notify');
+  
+  lineNotifyCheck.addEventListener('change', function() {
+    if (this.checked) {
+      lineAuthSection.classList.remove('hidden');
+      lineNotifyField.value = 'yes';
+    } else {
+      lineAuthSection.classList.add('hidden');
+      lineNotifyField.value = 'no';
+      document.getElementById('auth_code').value = '';
+    }
+  });
+
   // 次へボタン（Step 1 → Step 2）
   document.getElementById('next1').addEventListener('click', function() {
+    // LINE通知を希望している場合、認証コードの入力チェック
+    if (lineNotifyCheck.checked) {
+      const authCode = document.getElementById('auth_code').value;
+      if (!authCode || authCode.length !== 6) {
+        alert('LINE通知を希望される場合は、6桁の認証コードを入力してください。');
+        return;
+      }
+    }
+    
     step1.classList.add('hidden');
     step2.classList.remove('hidden');
     updateStepIndicator(1);
@@ -378,12 +440,16 @@ document.addEventListener('DOMContentLoaded', function() {
   function showConsultationSummary() {
     const resultArea = document.getElementById('result-consultation');
     const interestAreas = Array.from(document.querySelectorAll('input[name="interest_areas"]:checked')).map(cb => cb.value);
+    const lineNotify = lineNotifyCheck.checked ? 'LINE通知を設定しました' : 'メールのみで通知します';
     
     resultArea.innerHTML = `
 <strong>📋 ご相談内容の確認</strong>
 
 <strong>■ 関心のある分野</strong>
 ${interestAreas.length > 0 ? '・' + interestAreas.join('\n・') : '・（具体的な分野は今後お聞きします）'}
+
+<strong>■ 通知設定</strong>
+・${lineNotify}
 
 <strong>■ スマイディアからのアプローチ</strong>
 ・初回は無料でのご相談をお受けします
@@ -450,7 +516,7 @@ function collectFormData() {
   formData.industry = document.querySelector('select[name="industry"]').value;
   formData.organization_size = document.querySelector('select[name="organization_size"]').value;
   formData.line_notify = document.querySelector('input[name="line_notify"]').value;
-  formData.line_user_id = document.querySelector('input[name="line_user_id"]').value;
+  formData.auth_code = document.querySelector('input[name="auth_code"]').value || '';
   
   // Step 2のデータ - チェックボックスの値を配列で取得
   const interestAreas = [];
