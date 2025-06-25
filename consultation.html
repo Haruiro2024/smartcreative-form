@@ -129,24 +129,47 @@
           </select>
         </div>
 
-        <!-- 📱 連絡方法の希望 -->
+        <!-- 📱 連絡方法の希望（新システム） -->
         <div class="col-span-1 md:col-span-2 bg-green-50 p-4 rounded-lg border border-green-200">
           <h3 class="text-md font-semibold text-green-800 mb-3">📱 ご連絡方法について（任意）</h3>
           
           <div class="flex items-center mb-3">
-            <input type="checkbox" id="line_notify" name="line_notify" value="yes" class="mr-2">
-            <label for="line_notify" class="text-sm font-medium">LINEでもご連絡をお受けする</label>
+            <input type="checkbox" id="line-notify-checkbox" name="line_notify" value="yes" class="mr-2">
+            <label for="line-notify-checkbox" class="text-sm font-medium">LINEでもご連絡を受け取る</label>
             <span class="ml-2 bg-green-600 text-white text-xs px-2 py-1 rounded">便利</span>
           </div>
           
-          <div id="line_section" class="hidden">
-            <label class="block text-sm font-medium mb-1">LINE ID</label>
-            <input type="text" name="line_id" class="form-input mb-2" placeholder="@abc123 など">
-            <div class="text-xs text-gray-600 bg-white p-3 rounded border">
-              💡 <strong>LINE IDがわからない場合：</strong><br>
-              1. <a href="#" onclick="showQR()" class="text-green-600 underline font-medium">こちらのQRコード</a>をスキャンして友だち追加<br>
-              2. 自動返信でLINE IDをお知らせします<br>
-              3. そのIDを上記に入力してください
+          <!-- LINE連携エリア（チェック時のみ表示） -->
+          <div id="line-integration-area" style="display: none; margin-top: 20px; padding: 20px; background-color: #f0f9f0; border-radius: 8px;">
+            <div style="text-align: center;">
+              <p style="margin-bottom: 15px; font-weight: bold;">📲 LINE友だち追加</p>
+              <p style="margin-bottom: 15px; font-size: 14px;">こちらのボタンから友だち追加をお願いします</p>
+              
+              <!-- LINE友だち追加ボタン -->
+              <a href="https://lin.ee/3qxkFhF" target="_blank" id="line-add-button">
+                <img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" 
+                     alt="友だち追加" 
+                     height="36" 
+                     border="0">
+              </a>
+              
+              <p style="margin-top: 15px; font-size: 12px; color: #666;">
+                ※追加後、LINEで表示される認証コードを下記に入力してください
+              </p>
+            </div>
+            
+            <!-- 認証コード入力欄 -->
+            <div style="margin-top: 20px;">
+              <label for="line-auth-code">認証コード（6桁）</label>
+              <input type="text" 
+                     id="line-auth-code" 
+                     name="line_auth_code" 
+                     placeholder="例：123456" 
+                     maxlength="6" 
+                     pattern="[0-9]{6}"
+                     style="width: 150px; text-align: center; font-size: 18px; letter-spacing: 0.5em;"
+                     class="form-input">
+              <div id="auth-code-message" style="margin-top: 10px; font-size: 12px;"></div>
             </div>
           </div>
         </div>
@@ -302,33 +325,6 @@
     </div>
   </div>
 
-  <!-- QRコードモーダル -->
-  <div id="qr-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-    <div class="bg-white p-6 rounded-lg max-w-md mx-4 shadow-xl">
-      <h3 class="text-lg font-semibold mb-4 text-center text-green-800">
-        🖨️ スマイディア 公式LINE
-      </h3>
-      <div class="text-center mb-4">
-        <div class="w-48 h-48 mx-auto flex items-center justify-center bg-white p-2 rounded-lg border-2 border-green-200">
-          <img src="images/line-qr.png" alt="スマイディア LINE公式アカウント" 
-               class="w-full h-full object-contain rounded">
-        </div>
-      </div>
-      <div class="text-center space-y-2 mb-4">
-        <p class="text-sm font-medium text-gray-700">
-          📱 スマホでQRコードをスキャン
-        </p>
-        <p class="text-xs text-gray-600">
-          友だち追加後、自動返信でLINE IDをお知らせします<br>
-          そのIDを上記フォームに入力してください
-        </p>
-      </div>
-      <button onclick="closeQR()" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition-colors font-medium">
-        閉じる
-      </button>
-    </div>
-  </div>
-
   <!-- スタイル -->
   <style>
     .btn-blue { @apply bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium; }
@@ -339,26 +335,34 @@
     .form-input { 
       @apply w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent; 
     }
+    
+    /* LINE連携用の追加スタイル */
+    #line-integration-area {
+      border: 2px solid #00B900;
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #line-auth-code {
+      border: 2px solid #ddd;
+      padding: 10px;
+      font-family: monospace;
+    }
+
+    #line-auth-code:focus {
+      border-color: #00B900;
+      outline: none;
+    }
   </style>
 
   <!-- JavaScript -->
   <script>
 // DOMが読み込まれてから実行
 document.addEventListener('DOMContentLoaded', function() {
-  // LINE通知チェックボックスの制御
-  const lineNotify = document.getElementById('line_notify');
-  if (lineNotify) {
-    lineNotify.addEventListener('change', function() {
-      const lineSection = document.getElementById('line_section');
-      if (this.checked) {
-        lineSection.classList.remove('hidden');
-      } else {
-        lineSection.classList.add('hidden');
-        document.querySelector('input[name="line_id"]').value = '';
-      }
-    });
-  }
-
   // ステップナビゲーション
   const step1 = document.getElementById('step1');
   const step2 = document.getElementById('step2');
@@ -452,10 +456,76 @@ ${interestAreas.length > 0 ? '・' + interestAreas.join('\n・') : '・（具体
 お力になれるよう努力いたします。
     `;
   }
+
+  // LINE連携の新しい処理
+  const lineCheckbox = document.getElementById('line-notify-checkbox');
+  const lineArea = document.getElementById('line-integration-area');
+  const authCodeInput = document.getElementById('line-auth-code');
+  const authMessage = document.getElementById('auth-code-message');
+  const lineAddButton = document.getElementById('line-add-button');
+  
+  // チェックボックスの変更を監視
+  lineCheckbox.addEventListener('change', function() {
+    if (this.checked) {
+      lineArea.style.display = 'block';
+      // スムーズにスクロール
+      lineArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      lineArea.style.display = 'none';
+      authCodeInput.value = '';
+      authMessage.textContent = '';
+    }
+  });
+  
+  // 友だち追加ボタンクリック時の処理
+  lineAddButton.addEventListener('click', function() {
+    // ユーザーがボタンをクリックしたことを記録
+    sessionStorage.setItem('lineAddClicked', 'true');
+    sessionStorage.setItem('lineAddTime', new Date().getTime());
+  });
+  
+  // 認証コード入力の監視（6桁入力で自動検証）
+  authCodeInput.addEventListener('input', function() {
+    const code = this.value;
+    
+    // 数字のみ許可
+    this.value = code.replace(/[^0-9]/g, '');
+    
+    if (code.length === 6) {
+      // ここで認証コードの検証を行う（実際の実装では）
+      authMessage.style.color = '#28a745';
+      authMessage.textContent = '✓ 認証コードを確認しました';
+      
+      // 認証成功時、隠しフィールドにユーザーIDを設定
+      // 実際の実装では、認証コードからユーザーIDを取得
+      let hiddenUserId = document.querySelector('input[name="line_user_id"]');
+      if (!hiddenUserId) {
+        hiddenUserId = document.createElement('input');
+        hiddenUserId.type = 'hidden';
+        hiddenUserId.name = 'line_user_id';
+        this.parentElement.appendChild(hiddenUserId);
+      }
+      hiddenUserId.value = 'U' + code + '...'; // 実際はサーバーから取得
+    } else {
+      authMessage.textContent = '';
+    }
+  });
 });
 
 // フォーム送信処理
 function submitForm() {
+  // LINE認証の検証
+  const lineCheckbox = document.getElementById('line-notify-checkbox');
+  const authCodeInput = document.getElementById('line-auth-code');
+  const authMessage = document.getElementById('auth-code-message');
+  
+  if (lineCheckbox.checked && authCodeInput.value.length !== 6) {
+    authMessage.style.color = '#dc3545';
+    authMessage.textContent = '※ 認証コードを入力してください';
+    authCodeInput.focus();
+    return;
+  }
+  
   const formData = collectFormData();
   
   // Make.comにデータ送信
@@ -494,7 +564,11 @@ function collectFormData() {
   formData.industry = document.querySelector('select[name="industry"]').value;
   formData.organization_size = document.querySelector('select[name="organization_size"]').value;
   formData.line_notify = document.querySelector('input[name="line_notify"]').checked ? 'yes' : 'no';
-  formData.line_id = document.querySelector('input[name="line_id"]').value;
+  
+  // LINE関連のデータ
+  const lineUserIdInput = document.querySelector('input[name="line_user_id"]');
+  formData.line_user_id = lineUserIdInput ? lineUserIdInput.value : '';
+  formData.line_auth_code = document.querySelector('input[name="line_auth_code"]').value;
   
   // Step 2のデータ - チェックボックスの値を配列で取得
   const interestAreas = [];
@@ -513,17 +587,6 @@ function collectFormData() {
   formData.form_type = "新しい取り組み相談";
   
   return formData;
-}
-
-// QRコードモーダル制御
-function showQR() {
-  document.getElementById('qr-modal').classList.remove('hidden');
-  document.getElementById('qr-modal').classList.add('flex');
-}
-
-function closeQR() {
-  document.getElementById('qr-modal').classList.add('hidden');
-  document.getElementById('qr-modal').classList.remove('flex');
 }
 </script>
 </body>
