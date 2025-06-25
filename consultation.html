@@ -129,49 +129,23 @@
           </select>
         </div>
 
-        <!-- 📱 連絡方法の希望（新システム） -->
-        <div class="col-span-1 md:col-span-2 bg-green-50 p-4 rounded-lg border border-green-200">
-          <h3 class="text-md font-semibold text-green-800 mb-3">📱 ご連絡方法について（任意）</h3>
+        <!-- 📢 お知らせ（簡略版） -->
+        <div class="col-span-1 md:col-span-2 bg-blue-50 p-4 rounded-lg border border-blue-200">
+          <h3 class="text-md font-semibold text-blue-800 mb-3">📢 お知らせ</h3>
           
-          <div class="flex items-center mb-3">
-            <input type="checkbox" id="line-notify-checkbox" name="line_notify" value="yes" class="mr-2">
-            <label for="line-notify-checkbox" class="text-sm font-medium">LINEでもご連絡を受け取る</label>
-            <span class="ml-2 bg-green-600 text-white text-xs px-2 py-1 rounded">便利</span>
+          <div class="text-sm text-blue-700">
+            <p class="mb-2">
+              <strong>迅速な対応を心がけています</strong>
+            </p>
+            <p>
+              ご相談をいただいた後、1-2営業日以内に担当者よりご連絡いたします。<br>
+              お急ぎの場合は、お電話（077-XXX-XXXX）でもお気軽にお問い合わせください。
+            </p>
           </div>
           
-          <!-- LINE連携エリア（チェック時のみ表示） -->
-          <div id="line-integration-area" style="display: none; margin-top: 20px; padding: 20px; background-color: #f0f9f0; border-radius: 8px;">
-            <div style="text-align: center;">
-              <p style="margin-bottom: 15px; font-weight: bold;">📲 LINE友だち追加</p>
-              <p style="margin-bottom: 15px; font-size: 14px;">こちらのボタンから友だち追加をお願いします</p>
-              
-              <!-- LINE友だち追加ボタン -->
-              <a href="https://lin.ee/3qxkFhF" target="_blank" id="line-add-button">
-                <img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" 
-                     alt="友だち追加" 
-                     height="36" 
-                     border="0">
-              </a>
-              
-              <p style="margin-top: 15px; font-size: 12px; color: #666;">
-                ※追加後、LINEで表示される認証コードを下記に入力してください
-              </p>
-            </div>
-            
-            <!-- 認証コード入力欄 -->
-            <div style="margin-top: 20px;">
-              <label for="line-auth-code">認証コード（6桁）</label>
-              <input type="text" 
-                     id="line-auth-code" 
-                     name="line_auth_code" 
-                     placeholder="例：123456" 
-                     maxlength="6" 
-                     pattern="[0-9]{6}"
-                     style="width: 150px; text-align: center; font-size: 18px; letter-spacing: 0.5em;"
-                     class="form-input">
-              <div id="auth-code-message" style="margin-top: 10px; font-size: 12px;"></div>
-            </div>
-          </div>
+          <!-- 隠しフィールド（管理者通知用） -->
+          <input type="hidden" name="line_notify" value="no">
+          <input type="hidden" name="line_user_id" value="">
         </div>
       </div>
 
@@ -335,28 +309,6 @@
     .form-input { 
       @apply w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent; 
     }
-    
-    /* LINE連携用の追加スタイル */
-    #line-integration-area {
-      border: 2px solid #00B900;
-      animation: fadeIn 0.3s ease-in;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    #line-auth-code {
-      border: 2px solid #ddd;
-      padding: 10px;
-      font-family: monospace;
-    }
-
-    #line-auth-code:focus {
-      border-color: #00B900;
-      outline: none;
-    }
   </style>
 
   <!-- JavaScript -->
@@ -456,76 +408,10 @@ ${interestAreas.length > 0 ? '・' + interestAreas.join('\n・') : '・（具体
 お力になれるよう努力いたします。
     `;
   }
-
-  // LINE連携の新しい処理
-  const lineCheckbox = document.getElementById('line-notify-checkbox');
-  const lineArea = document.getElementById('line-integration-area');
-  const authCodeInput = document.getElementById('line-auth-code');
-  const authMessage = document.getElementById('auth-code-message');
-  const lineAddButton = document.getElementById('line-add-button');
-  
-  // チェックボックスの変更を監視
-  lineCheckbox.addEventListener('change', function() {
-    if (this.checked) {
-      lineArea.style.display = 'block';
-      // スムーズにスクロール
-      lineArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    } else {
-      lineArea.style.display = 'none';
-      authCodeInput.value = '';
-      authMessage.textContent = '';
-    }
-  });
-  
-  // 友だち追加ボタンクリック時の処理
-  lineAddButton.addEventListener('click', function() {
-    // ユーザーがボタンをクリックしたことを記録
-    sessionStorage.setItem('lineAddClicked', 'true');
-    sessionStorage.setItem('lineAddTime', new Date().getTime());
-  });
-  
-  // 認証コード入力の監視（6桁入力で自動検証）
-  authCodeInput.addEventListener('input', function() {
-    const code = this.value;
-    
-    // 数字のみ許可
-    this.value = code.replace(/[^0-9]/g, '');
-    
-    if (code.length === 6) {
-      // ここで認証コードの検証を行う（実際の実装では）
-      authMessage.style.color = '#28a745';
-      authMessage.textContent = '✓ 認証コードを確認しました';
-      
-      // 認証成功時、隠しフィールドにユーザーIDを設定
-      // 実際の実装では、認証コードからユーザーIDを取得
-      let hiddenUserId = document.querySelector('input[name="line_user_id"]');
-      if (!hiddenUserId) {
-        hiddenUserId = document.createElement('input');
-        hiddenUserId.type = 'hidden';
-        hiddenUserId.name = 'line_user_id';
-        this.parentElement.appendChild(hiddenUserId);
-      }
-      hiddenUserId.value = 'U' + code + '...'; // 実際はサーバーから取得
-    } else {
-      authMessage.textContent = '';
-    }
-  });
 });
 
 // フォーム送信処理
 function submitForm() {
-  // LINE認証の検証
-  const lineCheckbox = document.getElementById('line-notify-checkbox');
-  const authCodeInput = document.getElementById('line-auth-code');
-  const authMessage = document.getElementById('auth-code-message');
-  
-  if (lineCheckbox.checked && authCodeInput.value.length !== 6) {
-    authMessage.style.color = '#dc3545';
-    authMessage.textContent = '※ 認証コードを入力してください';
-    authCodeInput.focus();
-    return;
-  }
-  
   const formData = collectFormData();
   
   // Make.comにデータ送信
@@ -538,7 +424,7 @@ function submitForm() {
   })
   .then(response => {
     if (response.ok) {
-      alert('✅ ご相談を受け付けました！\n\n担当者より1-2営業日以内にご連絡いたします。\nLINE通知を設定された場合は、確認の通知も送信いたします。\n\nありがとうございました。');
+      alert('✅ ご相談を受け付けました！\n\n担当者より1-2営業日以内にご連絡いたします。\n\nありがとうございました。');
       setTimeout(() => {
         window.location.href = './index.html';
       }, 2000);
@@ -563,12 +449,8 @@ function collectFormData() {
   formData.phone = document.querySelector('input[name="phone"]').value;
   formData.industry = document.querySelector('select[name="industry"]').value;
   formData.organization_size = document.querySelector('select[name="organization_size"]').value;
-  formData.line_notify = document.querySelector('input[name="line_notify"]').checked ? 'yes' : 'no';
-  
-  // LINE関連のデータ
-  const lineUserIdInput = document.querySelector('input[name="line_user_id"]');
-  formData.line_user_id = lineUserIdInput ? lineUserIdInput.value : '';
-  formData.line_auth_code = document.querySelector('input[name="line_auth_code"]').value;
+  formData.line_notify = document.querySelector('input[name="line_notify"]').value;
+  formData.line_user_id = document.querySelector('input[name="line_user_id"]').value;
   
   // Step 2のデータ - チェックボックスの値を配列で取得
   const interestAreas = [];
