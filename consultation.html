@@ -504,35 +504,39 @@ function submitForm() {
   });
 }
 
-// フォームデータ収集
+// フォームデータ収集（修正版）
 function collectFormData() {
   const formData = {};
   
-  // Step 1のデータ
-  formData.company = document.querySelector('input[name="company"]').value;
-  formData.name = document.querySelector('input[name="name"]').value;
-  formData.email = document.querySelector('input[name="email"]').value;
-  formData.phone = document.querySelector('input[name="phone"]').value;
-  formData.industry = document.querySelector('select[name="industry"]').value;
-  formData.organization_size = document.querySelector('select[name="organization_size"]').value;
-  formData.line_notify = document.querySelector('input[name="line_notify"]').value;
-  formData.auth_code = document.querySelector('input[name="auth_code"]').value || '';
+  // Google Sheetsのヘッダーに合わせたキー名で設定
+  formData.A = new Date().toISOString(); // タイムスタンプ
+  formData.B = document.querySelector('input[name="company"]').value; // 会社名
+  formData.C = document.querySelector('input[name="name"]').value; // 担当者名
+  formData.D = document.querySelector('input[name="email"]').value; // メール
+  formData.E = document.querySelector('input[name="phone"]').value; // 電話番号
+  formData.F = document.querySelector('input[name="line_notify"]').value; // LINE通知希望
+  formData.G = document.querySelector('input[name="auth_code"]').value || ''; // LINE_ID
+  formData.H = document.querySelector('select[name="industry"]').value; // 業種・事業内容
+  formData.I = document.querySelector('select[name="organization_size"]').value; // 組織規模
   
-  // Step 2のデータ - チェックボックスの値を配列で取得
+  // 関心分野（配列を文字列に変換）
   const interestAreas = [];
   document.querySelectorAll('input[name="interest_areas"]:checked').forEach(cb => {
     interestAreas.push(cb.value);
   });
-  formData.interest_areas = interestAreas;
+  formData.J = interestAreas.join(', '); // 関心分野
   
-  formData.current_situation = document.querySelector('textarea[name="current_situation"]').value;
-  formData.ideal_outcome = document.querySelector('textarea[name="ideal_outcome"]').value;
-  formData.budget_approach = document.querySelector('select[name="budget_approach"]').value;
-  formData.timing = document.querySelector('select[name="timing"]').value;
-  formData.additional_notes = document.querySelector('textarea[name="additional_notes"]').value;
+  formData.K = document.querySelector('textarea[name="current_situation"]').value; // 現在の状況
+  formData.L = document.querySelector('textarea[name="ideal_outcome"]').value; // 理想の状態
+  formData.M = document.querySelector('select[name="budget_approach"]').value; // 予算アプローチ
+  formData.N = document.querySelector('select[name="timing"]').value; // 相談タイミング
+  formData.O = document.querySelector('textarea[name="additional_notes"]').value; // 補足情報
+  formData.P = "新しい取り組み相談"; // フォーム種別
   
-  // フォーム種別を追加
-  formData.form_type = "新しい取り組み相談";
+  // Q, R, S列はMake.com側で自動入力されるため、ここでは設定しない
+  // Q列: OpenAI分析結果
+  // R列: 検索キーワード
+  // S列: 類似事例
   
   return formData;
 }
